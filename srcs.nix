@@ -6,8 +6,8 @@ let
   nixpkgs = if release then bootPkgs.fetchFromGitHub {
     owner = "NixOS";
     repo = "nixpkgs-channels";
-    rev = "fce7562cf46727fdaf801b232116bc9ce0512049";
-    sha256 = "14rvi69ji61x3z88vbn17rg5vxrnw2wbnanxb7y0qzyqrj7spapx";
+    rev = "84d74ae9c9cbed73274b8e4e00be14688ffc93fe";
+    sha256 = "0ww70kl08rpcsxb9xdx8m48vz41dpss4hh3vvsmswll35l158x0v";
   } else _nixpkgs;
 in with import <nixpkgs> {}; let
   upstreamOrLocal = name: ghArgs:

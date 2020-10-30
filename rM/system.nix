@@ -31,7 +31,7 @@
       # the kernel.
       #
       # It would be nice to make modules also automatically have that variable set, but that appears to not be possible.
-      #float-abi = "hard";
+      # float-abi = "hard";
       fpu = "neon";
       cpu = "cortex-a9";
     };
