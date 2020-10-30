@@ -1,3 +1,14 @@
+# Nix cross-compilation to the reMarkable tablet
+
+## Quick start
+Clone and navigate to this repository and run the following to
+cross-compile GNU Hello to the reMarkable tablet.
+
+```sh
+nix build --arg release true -f . rmPkgs.hello
+```
+
+## Description
 This repository consolidates Nix tooling for developing for the
 [reMarkable tablet](https://remarkable.com).
 
