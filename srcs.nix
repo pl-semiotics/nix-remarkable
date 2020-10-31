@@ -5,9 +5,10 @@ let
 
   nixpkgs = if release then bootPkgs.fetchFromGitHub {
     owner = "NixOS";
-    repo = "nixpkgs-channels";
-    rev = "84d74ae9c9cbed73274b8e4e00be14688ffc93fe";
-    sha256 = "0ww70kl08rpcsxb9xdx8m48vz41dpss4hh3vvsmswll35l158x0v";
+    repo = "nixpkgs";
+    # nixpkgs-unstable 2020-10-31
+    rev = "ebe09a7ccc634bfad03d21e7a5f25923a451d875";
+    sha256 = "16fw8kh4ig3vd6370x7kb6f0ixkcb8mdj3rrj9c0rw774nk8a5lv";
   } else _nixpkgs;
 in with import <nixpkgs> {}; let
   upstreamOrLocal = name: ghArgs:
