@@ -1,8 +1,9 @@
-self: super: {
-  libvncserver = super.libvncserver.overrideAttrs (oA: {
-    # Remove a bunch of stupid dependencies
+self: super:
+
+{
+  libvncserver = (super.libvncserver.overrideAttrs (oA: {
+    # Remove unnecessary dependencies
     buildInputs = [ ];
-    cmakeFlags = (oA.cmakeFlags or []) ++ [ "-DWITH_PNG=OFF" ];
-    #buildInputs = oA.propagatedBuildInputs;
-  });
+    cmakeFlags = [ "-DWITH_PNG=OFF" ];
+  }));
 }
