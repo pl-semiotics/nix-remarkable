@@ -2,6 +2,7 @@
 { srcs, hostPkgs }: with srcs;
 
 (import nixpkgs {
+  system = "x86_64-linux";
   config.allowUnsupportedSystem = true;
   crossSystem = import ./system.nix { lib = import <nixpkgs/lib>; };
   overlays = [
