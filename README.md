@@ -17,6 +17,7 @@ This repository consolidates Nix tooling for developing for the
 Currently, it includes both a nixpkgs cross configuration for the
 reMarkable, and Nix expressions for various tools, currently
 including:
+- [appmarkable](https://github.com/LinusCDE/appmarkable)
 - [chessMarkable](https://github.com/LinusCDE/chessmarkable)
 - [gst-libvncclient-rfbsrc](https://github.com/peter-sa/gst-libvncclient-rfbsrc)
 - [mxc_epdc_fb_damage](https://github.com/peter-sa/mxc_epdc_fb_damage)
@@ -24,6 +25,7 @@ including:
 - [rM-vnc-server](https://github.com/peter-sa/rM-vnc-server)
 - [remarkable_news](https://github.com/Evidlo/remarkable_news)
 - [retris](https://github.com/LinusCDE/retris)
+- [rm-video-player](https://github.com/LinusCDE/rm-video-player)
 
 To build a local copy of the above packages, create a `pkgs/`
 directory, clone the relevant repository into it, and run `nix build`
@@ -33,12 +35,14 @@ To build release copies of any of the projects, run `nix build --arg
 release true -f . <attribute path>` from this repo (without needing to
 manually download anything else), where `<attribute path>` is one of:
 - `hostPkgs.gst-libvncclient-rfbsrc`
+- `rmPkgs.appmarkable`
 - `rmPkgs.chessmarkable`
 - `rmPkgs.linuxPackages.mxc_epdc_fb_damage`
 - `rmPkgs.plato`
 - `rmPkgs.rM-vnc-server`
 - `rmPkgs.remarkable_news`
 - `rmPkgs.retris`
+- `rmPkgs.rm-video-player`
 
 To develop your own packages for the reMarkable, use the `rmPkgs`
 attribute of the set computed in [default.nix](./default.nix) as a

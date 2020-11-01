@@ -70,3 +70,19 @@ jobs:
       with:
         name: plato
         path: plato
+    - run: nix build --arg release true -f . rmPkgs.appmarkable
+    - name: "Copy rmPkgs.appmarkable"
+      run: "mkdir appmarkable && cp -r result/* appmarkable && chmod +w -R appmarkable && chmod +x -R appmarkable"
+    - name: "Upload artifact to github"
+      uses: actions/upload-artifact@v2
+      with:
+        name: appmarkable
+        path: appmarkable
+    - run: nix build --arg release true -f . rmPkgs.rm-video-player
+    - name: "Copy rmPkgs.rm-video-player"
+      run: "mkdir rm-video-player && cp -r result/* rm-video-player && chmod +w -R rm-video-player && chmod +x -R rm-video-player"
+    - name: "Upload artifact to github"
+      uses: actions/upload-artifact@v2
+      with:
+        name: rm-video-player
+        path: rm-video-player
