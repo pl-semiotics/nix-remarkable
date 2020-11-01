@@ -6,5 +6,5 @@ srcs: self: super:
       mxc_epdc_fb_damage = selflp.callPackage srcs.mxc_epdc_fb_damage.drv {};
     });
   rM-vnc-server = self.callPackage srcs.rM-vnc-server.drv {};
-  remarkable-news = self.callPackage ./remarkable_news {};
+  remarkable_news = self.callPackage ./remarkable_news {};
 }
