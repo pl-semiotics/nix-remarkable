@@ -46,3 +46,11 @@ jobs:
       with:
         name: remarkable_news
         path: remarkable_news
+    - run: nix build --arg release true -f . rmPkgs.chessmarkable
+    - name: "Copy rmPkgs.chessmarkable"
+      run: "mkdir chessmarkable && cp -r result/* chessmarkable && chmod +w -R chessmarkable"
+    - name: "Upload artifact to github"
+      uses: actions/upload-artifact@v2
+      with:
+        name: chessmarkable
+        path: chessmarkable

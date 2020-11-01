@@ -1,14 +1,14 @@
 { stdenv, fetchFromGitHub, buildGoPackage }:
 
 buildGoPackage rec {
-  name = "remarkable_news-unstable-${version}";
-  version = "2020-09-28";
+  pname = "remarkable_news";
+  version = "unstable-2020-09-28";
 
   goPackagePath = "github.com/Evidlo/remarkable_news";
 
   src = fetchFromGitHub {
     owner = "Evidlo";
-    repo = "remarkable_news";
+    repo = pname;
     rev = "b74b6ad40a0b7a376dece5fd91100546796a3b2c";
     sha256 = "000id1xg6k6riv89h92fzkxg59rym2i60bh6v02hpdm5ql0wrs6a";
   };
