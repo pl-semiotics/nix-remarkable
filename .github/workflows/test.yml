@@ -24,7 +24,7 @@ jobs:
         path: mxc_epdc_fb_damage
     - run: nix build --arg release true -f . rmPkgs.rM-vnc-server
     - name: "Copy rmPkgs.rM-vnc-server"
-      run: "mkdir rM-vnc-server && cp -r result/* rM-vnc-server && chmod +w -R rM-vnc-server"
+      run: "mkdir rM-vnc-server && cp -r result/* rM-vnc-server && chmod +w -R rM-vnc-server && chmod +x -R rM-vnc-server/bin"
     - name: "Upload artifact to github"
       uses: actions/upload-artifact@v2
       with:
@@ -32,7 +32,7 @@ jobs:
         path: rM-vnc-server
     - run: nix build --arg release true -f . hostPkgs.gst-libvncclient-rfbsrc
     - name: "Copy hostPkgs.gst-libvncclient-rfbsrc"
-      run: "mkdir gst-libvncclient-rfbsrc && cp -r result/* gst-libvncclient-rfbsrc && chmod +w -R gst-libvncclient-rfbsrc"
+      run: "mkdir gst-libvncclient-rfbsrc && cp -r result/* gst-libvncclient-rfbsrc && chmod +w -R gst-libvncclient-rfbsrc && chmod +x -R gst-libvncclient-rfbsrc"
     - name: "Upload artifact to github"
       uses: actions/upload-artifact@v2
       with:
@@ -40,7 +40,7 @@ jobs:
         path: gst-libvncclient-rfbsrc
     - run: nix build --arg release true -f . rmPkgs.remarkable_news
     - name: "Copy rmPkgs.remarkable_news"
-      run: "mkdir remarkable_news && cp -r result/* remarkable_news && chmod +w -R remarkable_news"
+      run: "mkdir remarkable_news && cp -r result/* remarkable_news && chmod +w -R remarkable_news && chmod +x -R remarkable_news"
     - name: "Upload artifact to github"
       uses: actions/upload-artifact@v2
       with:
@@ -48,7 +48,7 @@ jobs:
         path: remarkable_news
     - run: nix build --arg release true -f . rmPkgs.chessmarkable
     - name: "Copy rmPkgs.chessmarkable"
-      run: "mkdir chessmarkable && cp -r result/* chessmarkable && chmod +w -R chessmarkable"
+      run: "mkdir chessmarkable && cp -r result/* chessmarkable && chmod +w -R chessmarkable && chmod +x -R chessmarkable"
     - name: "Upload artifact to github"
       uses: actions/upload-artifact@v2
       with:
