@@ -62,35 +62,3 @@ jobs:
       with:
         name: retris
         path: retris
-    - run: nix build --arg release true -f . rmPkgs.plato
-    - name: "Copy rmPkgs.plato"
-      run: "mkdir plato && cp -r result/* plato && chmod +w -R plato && chmod +x -R plato"
-    - name: "Upload artifact to github"
-      uses: actions/upload-artifact@v2
-      with:
-        name: plato
-        path: plato
-    - run: nix build --arg release true -f . rmPkgs.appmarkable
-    - name: "Copy rmPkgs.appmarkable"
-      run: "mkdir appmarkable && cp -r result/* appmarkable && chmod +w -R appmarkable && chmod +x -R appmarkable"
-    - name: "Upload artifact to github"
-      uses: actions/upload-artifact@v2
-      with:
-        name: appmarkable
-        path: appmarkable
-    - run: nix build --arg release true -f . rmPkgs.rm-video-player
-    - name: "Copy rmPkgs.rm-video-player"
-      run: "mkdir rm-video-player && cp -r result/* rm-video-player && chmod +w -R rm-video-player && chmod +x -R rm-video-player"
-    - name: "Upload artifact to github"
-      uses: actions/upload-artifact@v2
-      with:
-        name: rm-video-player
-        path: rm-video-player
-    - run: nix build --arg release true -f . rmPkgs.remarkable-fractals
-    - name: "Copy rmPkgs.remarkable-fractals"
-      run: "mkdir remarkable-fractals && cp -r result/* remarkable-fractals && chmod +w -R remarkable-fractals && chmod +x -R remarkable-fractals"
-    - name: "Upload artifact to github"
-      uses: actions/upload-artifact@v2
-      with:
-        name: remarkable-fractals
-        path: remarkable-fractals
