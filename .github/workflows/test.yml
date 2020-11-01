@@ -24,7 +24,7 @@ jobs:
         path: mxc_epdc_fb_damage
     - run: nix build --arg release true -f . rmPkgs.rM-vnc-server
     - name: "Copy rmPkgs.rM-vnc-server"
-      run: "mkdir rM-vnc-server && cp -r result/* rM-vnc-server && chmod +w -R rM-vnc-server && chmod +x -R rM-vnc-server/bin"
+      run: "mkdir rM-vnc-server && cp -r result/* rM-vnc-server && chmod +w -R rM-vnc-server && chmod +x -R rM-vnc-server"
     - name: "Upload artifact to github"
       uses: actions/upload-artifact@v2
       with:
@@ -54,3 +54,19 @@ jobs:
       with:
         name: chessmarkable
         path: chessmarkable
+    - run: nix build --arg release true -f . rmPkgs.retris
+    - name: "Copy rmPkgs.retris"
+      run: "mkdir retris && cp -r result/* retris && chmod +w -R retris && chmod +x -R retris"
+    - name: "Upload artifact to github"
+      uses: actions/upload-artifact@v2
+      with:
+        name: retris
+        path: retris
+    - run: nix build --arg release true -f . rmPkgs.plato
+    - name: "Copy rmPkgs.plato"
+      run: "mkdir plato && cp -r result/* plato && chmod +w -R plato && chmod +x -R plato"
+    - name: "Upload artifact to github"
+      uses: actions/upload-artifact@v2
+      with:
+        name: plato
+        path: plato

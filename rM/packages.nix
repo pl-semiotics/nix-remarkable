@@ -5,7 +5,13 @@ srcs: self: super:
     (selflp: superlp: {
       mxc_epdc_fb_damage = selflp.callPackage srcs.mxc_epdc_fb_damage.drv {};
     });
+  chessmarkable = self.callPackage ./pkgs/chessmarkable {};
+  plato = self.callPackage ./pkgs/plato {
+    makeRustPlatform = super.pkgs.makeRustPlatform;
+    callPackage = super.pkgs.callPackage;
+    fetchFromGitHub = super.pkgs.fetchFromGitHub;
+  };
   rM-vnc-server = self.callPackage srcs.rM-vnc-server.drv {};
   remarkable_news = self.callPackage ./pkgs/remarkable_news {};
-  chessmarkable = self.callPackage ./pkgs/chessmarkable {};
+  retris = self.callPackage ./pkgs/retris {};
 }
