@@ -23,6 +23,7 @@ including:
 - [mxc_epdc_fb_damage](https://github.com/peter-sa/mxc_epdc_fb_damage)
 - [plato](https://github.com/LinusCDE/plato)
 - [rM-vnc-server](https://github.com/peter-sa/rM-vnc-server)
+- [remarkable-fractals](https://github.com/dannyow/reMarkable-fractals)
 - [remarkable_news](https://github.com/Evidlo/remarkable_news)
 - [retris](https://github.com/LinusCDE/retris)
 - [rm-video-player](https://github.com/LinusCDE/rm-video-player)
@@ -40,6 +41,7 @@ manually download anything else), where `<attribute path>` is one of:
 - `rmPkgs.linuxPackages.mxc_epdc_fb_damage`
 - `rmPkgs.plato`
 - `rmPkgs.rM-vnc-server`
+- `rmPkgs.remarkable-fractals`
 - `rmPkgs.remarkable_news`
 - `rmPkgs.retris`
 - `rmPkgs.rm-video-player`

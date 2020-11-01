@@ -86,3 +86,11 @@ jobs:
       with:
         name: rm-video-player
         path: rm-video-player
+    - run: nix build --arg release true -f . rmPkgs.remarkable-fractals
+    - name: "Copy rmPkgs.remarkable-fractals"
+      run: "mkdir remarkable-fractals && cp -r result/* remarkable-fractals && chmod +w -R remarkable-fractals && chmod +x -R remarkable-fractals"
+    - name: "Upload artifact to github"
+      uses: actions/upload-artifact@v2
+      with:
+        name: remarkable-fractals
+        path: remarkable-fractals

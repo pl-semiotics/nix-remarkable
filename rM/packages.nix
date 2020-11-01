@@ -13,6 +13,7 @@ srcs: self: super:
     fetchFromGitHub = super.pkgs.fetchFromGitHub;
   };
   rM-vnc-server = self.callPackage srcs.rM-vnc-server.drv {};
+  remarkable-fractals = self.callPackage ./pkgs/remarkable-fractals {};
   remarkable_news = self.callPackage ./pkgs/remarkable_news {};
   retris = self.callPackage ./pkgs/retris {};
   rm-video-player = self.callPackage ./pkgs/rm-video-player {};
