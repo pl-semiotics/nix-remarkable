@@ -7,6 +7,8 @@ srcs: self: super:
     });
   appmarkable = self.callPackage ./pkgs/appmarkable {};
   chessmarkable = self.callPackage ./pkgs/chessmarkable {};
+  evkill = self.callPackage ./pkgs/evkill {};
+  # Need to figure out how to cross-compile Rust nightly
   plato = self.callPackage ./pkgs/plato {
     makeRustPlatform = super.pkgs.makeRustPlatform;
     callPackage = super.pkgs.callPackage;

@@ -62,3 +62,11 @@ jobs:
       with:
         name: retris
         path: retris
+    - run: nix build --arg release true -f . rmPkgs.evkill
+    - name: "Copy rmPkgs.evkill"
+      run: "mkdir evkill && cp -r result/* evkill && chmod +w -R evkill && chmod +x -R evkill"
+    - name: "Upload artifact to github"
+      uses: actions/upload-artifact@v2
+      with:
+        name: evkill
+        path: evkill

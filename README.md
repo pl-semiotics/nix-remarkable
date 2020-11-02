@@ -19,6 +19,7 @@ reMarkable, and Nix expressions for various tools, currently
 including:
 - [appmarkable](https://github.com/LinusCDE/appmarkable)
 - [chessMarkable](https://github.com/LinusCDE/chessmarkable)
+- [evkill](https://github.com/Enteee/evkill)
 - [gst-libvncclient-rfbsrc](https://github.com/peter-sa/gst-libvncclient-rfbsrc)
 - [mxc_epdc_fb_damage](https://github.com/peter-sa/mxc_epdc_fb_damage)
 - [plato](https://github.com/LinusCDE/plato)
@@ -38,6 +39,7 @@ manually download anything else), where `<attribute path>` is one of:
 - `hostPkgs.gst-libvncclient-rfbsrc`
 - `rmPkgs.appmarkable`
 - `rmPkgs.chessmarkable`
+- `rmPkgs.evkill`
 - `rmPkgs.linuxPackages.mxc_epdc_fb_damage`
 - `rmPkgs.plato`
 - `rmPkgs.rM-vnc-server`
