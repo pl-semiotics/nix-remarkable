@@ -1,5 +1,5 @@
 # if release is not set, import packages from subdirectories if they exist
-{ srcs, hostPkgs, nixpkgs }: with srcs;
+{ srcs, hostPkgs }: with srcs;
 
 (import nixpkgs {
   system = "x86_64-linux";

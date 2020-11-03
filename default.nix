@@ -5,6 +5,6 @@
 }:
 
 rec {
-  rmPkgs = import ./rM { inherit srcs hostPkgs nixpkgs; };
+  rmPkgs = import ./rM { inherit srcs hostPkgs; };
   hostPkgs = import ./host { inherit srcs rmPkgs; };
 }
