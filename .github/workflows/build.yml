@@ -14,7 +14,7 @@ jobs:
       with:
         name: nix-remarkable
         signingKey: '${{ secrets.CACHIX_SIGNING_KEY }}'
-    - run: nix build --arg release true -f . rmPkgs.linuxPackages.mxc_epdc_fb_damage
+    - run: nix build -L --arg release true -f . rmPkgs.linuxPackages.mxc_epdc_fb_damage
     - name: "Copy linuxPackages.mxc_epdc_fb_damage"
       run: "mkdir mxc_epdc_fb_damage && cp -r result/* mxc_epdc_fb_damage && chmod +w -R mxc_epdc_fb_damage"
     - name: "Upload artifact to github"
@@ -22,7 +22,7 @@ jobs:
       with:
         name: mxc_epdc_fb_damage
         path: mxc_epdc_fb_damage
-    - run: nix build --arg release true -f . rmPkgs.rM-vnc-server
+    - run: nix build -L --arg release true -f . rmPkgs.rM-vnc-server
     - name: "Copy rmPkgs.rM-vnc-server"
       run: "mkdir rM-vnc-server && cp -r result/* rM-vnc-server && chmod +w -R rM-vnc-server && chmod +x -R rM-vnc-server"
     - name: "Upload artifact to github"
@@ -30,7 +30,7 @@ jobs:
       with:
         name: rM-vnc-server
         path: rM-vnc-server
-    - run: nix build --arg release true -f . hostPkgs.gst-libvncclient-rfbsrc
+    - run: nix build -L --arg release true -f . hostPkgs.gst-libvncclient-rfbsrc
     - name: "Copy hostPkgs.gst-libvncclient-rfbsrc"
       run: "mkdir gst-libvncclient-rfbsrc && cp -r result/* gst-libvncclient-rfbsrc && chmod +w -R gst-libvncclient-rfbsrc && chmod +x -R gst-libvncclient-rfbsrc"
     - name: "Upload artifact to github"
@@ -38,7 +38,7 @@ jobs:
       with:
         name: gst-libvncclient-rfbsrc
         path: gst-libvncclient-rfbsrc
-    - run: nix build --arg release true -f . rmPkgs.remarkable_news
+    - run: nix build -L --arg release true -f . rmPkgs.remarkable_news
     - name: "Copy rmPkgs.remarkable_news"
       run: "mkdir remarkable_news && cp -r result/* remarkable_news && chmod +w -R remarkable_news && chmod +x -R remarkable_news"
     - name: "Upload artifact to github"
@@ -46,7 +46,7 @@ jobs:
       with:
         name: remarkable_news
         path: remarkable_news
-    - run: nix build --arg release true -f . rmPkgs.chessmarkable
+    - run: nix build -L --arg release true -f . rmPkgs.chessmarkable
     - name: "Copy rmPkgs.chessmarkable"
       run: "mkdir chessmarkable && cp -r result/* chessmarkable && chmod +w -R chessmarkable && chmod +x -R chessmarkable"
     - name: "Upload artifact to github"
@@ -54,7 +54,7 @@ jobs:
       with:
         name: chessmarkable
         path: chessmarkable
-    - run: nix build --arg release true -f . rmPkgs.retris
+    - run: nix build -L --arg release true -f . rmPkgs.retris
     - name: "Copy rmPkgs.retris"
       run: "mkdir retris && cp -r result/* retris && chmod +w -R retris && chmod +x -R retris"
     - name: "Upload artifact to github"
@@ -62,7 +62,7 @@ jobs:
       with:
         name: retris
         path: retris
-    - run: nix build --arg release true -f . rmPkgs.evkill
+    - run: nix build -L --arg release true -f . rmPkgs.evkill
     - name: "Copy rmPkgs.evkill"
       run: "mkdir evkill && cp -r result/* evkill && chmod +w -R evkill && chmod +x -R evkill"
     - name: "Upload artifact to github"
