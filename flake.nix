@@ -21,7 +21,8 @@
       packages.x86_64-linux = {
         inherit (rmPkgs.linuxPackages) mxc_epdc_fb_damage;
         inherit (rmPkgs) rM-vnc-server chessmarkable retris evkill;
-        inherit (rmPkgs) remarkable-fractals remarkable_news;
+        inherit (rmPkgs) remarkable_news;
+        # inherit (rmPkgs) remarkable-fractals;
         inherit (hostPkgs) gst-libvncclient-rfbsrc;
       };
 
