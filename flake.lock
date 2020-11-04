@@ -1,0 +1,81 @@
+{
+  "nodes": {
+    "gst-libvncclient-rfbsrc": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1588455169,
+        "narHash": "sha256-P/s0RhY04BCHmUIHamKWgAIGxlHYUf99Im/8j0s2DUY=",
+        "owner": "peter-sa",
+        "repo": "gst-libvncclient-rfbsrc",
+        "rev": "399c634cf5cd7afc649df15861fe9f463c4249e0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "peter-sa",
+        "ref": "v0.0.1",
+        "repo": "gst-libvncclient-rfbsrc",
+        "type": "github"
+      }
+    },
+    "mxc_epdc_fb_damage": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1588455209,
+        "narHash": "sha256-ewvHqQz5HMTMPAysYQYdeCCKlgqqFQz1x1Mnnlzyvd4=",
+        "owner": "peter-sa",
+        "repo": "mxc_epdc_fb_damage",
+        "rev": "8b9405a924bf105c0d3e3b51ed47128f66521f50",
+        "type": "github"
+      },
+      "original": {
+        "owner": "peter-sa",
+        "ref": "v0.0.1",
+        "repo": "mxc_epdc_fb_damage",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1604062258,
+        "narHash": "sha256-mxaFpiXn8AxYkjkP2SpabPYInFnzdHCGaXu8SOBE3Jk=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ebe09a7ccc634bfad03d21e7a5f25923a451d875",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ebe09a7ccc634bfad03d21e7a5f25923a451d875",
+        "type": "github"
+      }
+    },
+    "rM-vnc-server": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1588455269,
+        "narHash": "sha256-Y1z69KvOFsBLHe0ixbYlyILV09kSGaJ+ooDE/dlT2Sw=",
+        "owner": "peter-sa",
+        "repo": "rM-vnc-server",
+        "rev": "3beb2988062c939c1e84c3c3b780e209d22cccab",
+        "type": "github"
+      },
+      "original": {
+        "owner": "peter-sa",
+        "ref": "v0.0.1",
+        "repo": "rM-vnc-server",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "gst-libvncclient-rfbsrc": "gst-libvncclient-rfbsrc",
+        "mxc_epdc_fb_damage": "mxc_epdc_fb_damage",
+        "nixpkgs": "nixpkgs",
+        "rM-vnc-server": "rM-vnc-server"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
