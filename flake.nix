@@ -28,6 +28,10 @@
 
       packages.x86_64-darwin = self.packages.x86_64-linux;
 
+      overlay = final: prev: {
+        inherit rmPkgs hostPkgs;
+      };
+
       # packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
       # defaultPackage.x86_64-linux = self.packages.x86_64-linux.hello;
 
