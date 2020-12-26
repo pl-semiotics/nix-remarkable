@@ -1,12 +1,11 @@
-
 { fetchFromGitHub, }:
 
 {
   src = fetchFromGitHub {
     owner = "reMarkable";
     repo = "linux";
-    rev = "lars/zero-gravitas_4.9";
-    hash = "sha256-WKOqSZKD1fkOQ4mgy0cehMdlcKu1yeEhnwFtAdRkkrM=";
+    rev = "1774e2a6a091fdc081324e966d3db0aa9df75c0b";
+    sha256 = "0pjk6ag2s685ar6d31sx484k1wyhyn7g7mz9zib910zcmfb3rdqf";
   };
   version = "4.9.84-zero-gravitas";
 }
