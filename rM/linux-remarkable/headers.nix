@@ -1,4 +1,4 @@
-{ stdenv, path, callPackage }:
+{ stdenv, path, callPackage, writeTextDir, targetPlatform, lib }:
 
 with callPackage ./src.nix {};
 
@@ -7,6 +7,7 @@ with callPackage ./src.nix {};
 let
   khpath = path + /pkgs/os-specific/linux/kernel-headers;
 in
+
 ((callPackage khpath {}).makeLinuxHeaders {
   inherit version src;
 }).overrideAttrs (oA: {
@@ -22,6 +23,8 @@ in
 
   buildPhase = ''
     make mrproper $makeFlags
+  '' + lib.optionalString (targetPlatform.platform.rmVersion != 2) ''
+    # RM2 headers don't pass check, sadly
     make headers_check $makeFlags
   '';
   checkPhase = "";

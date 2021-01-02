@@ -1,9 +1,12 @@
 # if release is not set, import packages from subdirectories if they exist
-{ srcs, hostPkgs }: with srcs;
+{ srcs, hostPkgs, rmVersion }: with srcs;
 
 (import nixpkgs {
   config.allowUnsupportedSystem = true;
-  crossSystem = import ./system.nix { lib = import <nixpkgs/lib>; };
+  crossSystem = import ./system.nix {
+    inherit rmVersion;
+    lib = import <nixpkgs/lib>;
+  };
   overlays = [
     # Basic tools---the toolchain packages
     (import ./toolchain.nix)
@@ -22,6 +25,8 @@
     # Overrides to make more things work (hopefully)
     # Most of this should probably be moved into crossOverlays
     (import ./overrides.nix)
+    # Extra upstream kernel modules to build
+    (import ./modules.nix)
     # Local packages
     (import ./packages.nix srcs)
   ];

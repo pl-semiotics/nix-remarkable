@@ -1,10 +1,23 @@
-{ callPackage, wrapBintoolsWith, wrapCCWith, runCommand }:
+{ callPackage, wrapBintoolsWith, wrapCCWith, runCommand, buildPackages, targetPlatform, lib }: with lib;
+
+let
+  rMv = targetPlatform.platform.rmVersion;
+  parameters = if rMv == 1 then {
+    remarkable-toolchain = buildPackages.remarkable-toolchain;
+    hostRoot = "x86_64-oesdk-linux";
+    targetRoot = "cortexa9hf-neon-oe-linux-gnueabi";
+  } else if rMv == 2 then {
+    remarkable-toolchain = callPackage ./rm2-toolchain.nix {};
+    hostRoot = "x86_64-codexsdk-linux";
+    targetRoot = "cortexa7hf-neon-remarkable-linux-gnueabi";
+  } else throw "Unknown rmVersion!";
+in with parameters;
 
 rec {
-  oecore-raw = callPackage ./oecore-raw.nix { };
   # Inspired by the android ndk toolchain packaging
   # using runCommand instead of just a path in order to add extra attributes
-  binaries = runCommand "rm-toolchain-bins" {
+  binaries = runCommand "rm-toolchain-bins-${remarkable-toolchain.version}" {
+    inherit (remarkable-toolchain) version;
     isGNU = true; # based on gcc/binutils
     # need something in lib to appease gdb. this isn't right, but it
     # might not matter
@@ -12,22 +25,19 @@ rec {
     # This may lead to a missing libcxx, deal with that later
   } ''
     mkdir -p $out
-    ln -s ${oecore-raw}/sysroots/x86_64-oesdk-linux/usr/bin/arm-oe-linux-gnueabi $out/bin
+    ln -s ${remarkable-toolchain}/sysroots/${hostRoot}/usr/bin/${targetPlatform.config} $out/bin
     mkdir -p $out/nix-support
-    #echo 'set +u' >$out/nix-support/setup-hook
-    #cat ${oecore-raw}/environment-setup-cortexa9hf-neon-oe-linux-gnueabi >>$out/nix-support/setup-hook
   '';
-  libraries = runCommand "rm-toolchain-libs" {
-    propagatedBuildInputs = [ oecore-raw ];
+  libraries = runCommand "rm-toolchain-libs-${remarkable-toolchain.version}" {
+    inherit (remarkable-toolchain) version;
+    propagatedBuildInputs = [ remarkable-toolchain ];
   } ''
     mkdir -p $out
-    ln -s ${oecore-raw}/sysroots/cortexa9hf-neon-oe-linux-gnueabi/usr/include $out/
-    cp -rsHf ${oecore-raw}/sysroots/cortexa9hf-neon-oe-linux-gnueabi/lib $out
+    ln -s ${remarkable-toolchain}/sysroots/${targetRoot}/usr/include $out/
+    cp -rsHf ${remarkable-toolchain}/sysroots/${targetRoot}/lib $out
     chmod -R u+w $out/lib
-    cp -rsHf ${oecore-raw}/sysroots/cortexa9hf-neon-oe-linux-gnueabi/usr/lib $out
+    cp -rsHf ${remarkable-toolchain}/sysroots/${targetRoot}/usr/lib $out
   '';
-  #binutils = binaries // { binutils = binaries; libc = libraries; targetPrefix = "arm-oe-linux-gnueabi"; };
-  #gcc = binaries // { cc = binaries; bintools = binutils; libc = libraries; targetPrefix = "arm-oe-linux-gnueabi"; };
 
   binutils = wrapBintoolsWith {
     bintools = binaries;
@@ -39,12 +49,12 @@ rec {
       echo "-dynamic-linker /lib/ld-linux-armhf.so.3" > $out/nix-support/libc-ldflags-before
 
       # maybe hacky to use sysroot here?
-      echo "--sysroot=${oecore-raw}/sysroots/cortexa9hf-neon-oe-linux-gnueabi" >>$out/nix-support/libc-ldflags-before
+      echo "--sysroot=${remarkable-toolchain}/sysroots/${targetRoot}" >>$out/nix-support/libc-ldflags-before
 
       # definitely hacky but whatever
       sed -i "1 a\\
       NIX_ENFORCE_PURITY=0\\
-      NIX_''${infixSalt}_DONT_SET_RPATH=1
+      NIX_DONT_SET_RPATH_''${suffixSalt}=1
       " $out/bin/*
     '';
   };
@@ -55,16 +65,32 @@ rec {
     # hack??
     extraBuildCommands = ''
       # maybe hacky to use sysroot here?
-      echo "--sysroot=${oecore-raw}/sysroots/cortexa9hf-neon-oe-linux-gnueabi" >>$out/nix-support/cc-cflags-before
+      echo "--sysroot=${remarkable-toolchain}/sysroots/${targetRoot}" >>$out/nix-support/cc-cflags-before
 
       # Work around float abi problems (see note in system.nix)
-      # Extract infixSalt since there's no other way to get it in here
+      # Extract suffixSalt since there's no other way to get it in here
       # (alternatively: use overrideAttrs on the produced derivation)
       # If the final line of cc-wrapper ever changes, this breaks :-(
-      infixSalt="$(tail -n 1 $out/nix-support/add-flags.sh | sed 's/export NIX_CC_WRAPPER_\(.*\)_FLAGS_SET=1/\1/')"
-      echo "doing $infixSalt"
-      echo "mangleVarList \"NIX+CFLAGS_COMPILE_FLOAT_ABI\" \''${role_infixes[@]+\"\''${role_infixes[@]}\"}" >>$out/nix-support/add-flags.sh
-      echo "NIX_''${infixSalt}_CFLAGS_COMPILE_BEFORE=\"\''${NIX_''${infixSalt}_CFLAGS_COMPILE_FLOAT_ABI:--mfloat-abi=hard} \$NIX_''${infixSalt}_CFLAGS_COMPILE_BEFORE\"" >>$out/nix-support/add-flags.sh
+      #
+      # We can't check if the variable is set/unset, because
+      # mangleVarList sets the variable unconditionally---so we have
+      # to go by empty. Hence, if you would rather just put nothing in
+      # for one of these (cough, cough, kernel/module builds), you'd
+      # better put some whitespace in there.
+      suffixSalt="$(tail -n 1 $out/nix-support/add-flags.sh | sed 's/export NIX_CC_WRAPPER_FLAGS_SET_\(.*\)=1/\1/')"
+      echo "doing $suffixSalt"
+    '' + optionalString (targetPlatform ? platform.gcc.optional.arch) ''
+      echo "mangleVarList \"NIX_CFLAGS_COMPILE_MARCH\" \''${role_suffixes[@]+\"\''${role_suffixes[@]}\"}" >>$out/nix-support/add-flags.sh
+      echo "NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}=\"\''${NIX_CFLAGS_COMPILE_MARCH_''${suffixSalt}:--march=${targetPlatform.platform.gcc.optional.arch}} \$NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}\"" >>$out/nix-support/add-flags.sh
+    '' + optionalString (targetPlatform ? platform.gcc.optional.cpu) ''
+      echo "mangleVarList \"NIX_CFLAGS_COMPILE_MCPU\" \''${role_suffixes[@]+\"\''${role_suffixes[@]}\"}" >>$out/nix-support/add-flags.sh
+      echo "NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}=\"\''${NIX_CFLAGS_COMPILE_MCPU_''${suffixSalt}:--mcpu=${targetPlatform.platform.gcc.optional.cpu}} \$NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}\"" >>$out/nix-support/add-flags.sh
+    '' + optionalString (targetPlatform ? platform.gcc.optional.fpu) ''
+      echo "mangleVarList \"NIX_CFLAGS_COMPILE_MFPU\" \''${role_suffixes[@]+\"\''${role_suffixes[@]}\"}" >>$out/nix-support/add-flags.sh
+      echo "NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}=\"\''${NIX_CFLAGS_COMPILE_MFPU_''${suffixSalt}:--mfpu=${targetPlatform.platform.gcc.optional.fpu}} \$NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}\"" >>$out/nix-support/add-flags.sh
+    '' + optionalString (targetPlatform ? platform.gcc.optional.float-abi) ''
+      echo "mangleVarList \"NIX_CFLAGS_COMPILE_MFLOAT_ABI\" \''${role_suffixes[@]+\"\''${role_suffixes[@]}\"}" >>$out/nix-support/add-flags.sh
+      echo "NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}=\"\''${NIX_CFLAGS_COMPILE_MFLOAT_ABI_''${suffixSalt}:--mfloat-abi=hard} \$NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}\"" >>$out/nix-support/add-flags.sh
     '';
   };
 }

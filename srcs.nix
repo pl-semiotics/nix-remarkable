@@ -5,9 +5,9 @@ let
 
   nixpkgs = if release then bootPkgs.fetchFromGitHub {
     owner = "NixOS";
-    repo = "nixpkgs-channels";
-    rev = "fce7562cf46727fdaf801b232116bc9ce0512049";
-    sha256 = "14rvi69ji61x3z88vbn17rg5vxrnw2wbnanxb7y0qzyqrj7spapx";
+    repo = "nixpkgs";
+    rev = "83cbad92d73216bb0d9187c56cce0b91f9121d5a";
+    hash = "sha256-QK/qV1AaLnGEu+KwiPX7vSxzU9lMB6zM+kIbvjJo54k=";
   } else _nixpkgs;
 in with import <nixpkgs> {}; let
   upstreamOrLocal = name: ghArgs:
@@ -22,17 +22,27 @@ in
   inherit nixpkgs;
 
   mxc_epdc_fb_damage = upstreamOrLocal "mxc_epdc_fb_damage" {
-    owner = "peter-sa";
-    rev = "v0.0.1";
-    sha256 = "1pmxy9f9w9skqzshq5da1ab8l83q3l363b0c7k6c877r1jlwf2vv";
+    owner = "pl-semiotics";
+    rev = "8c1692a2dee012a66622aabf59403a1247379ecd";
+    sha256 = "0imxw4kwsllgrmnrx9nmws3iqbcp5xkjymkng4r2rsgnyhnkdim8";
+  };
+  libqsgepaper-snoop = upstreamOrLocal "libqsgepaper-snoop" {
+    owner = "pl-semiotics";
+    rev = "bea7f852a3a155ee8d05a26ff1311f3e08796608";
+    sha256 = "1fm6f1sm0cnkw84zcfdra20f6r7h3mxhhrwwdihalyl6n2gkbqa3";
+  };
+  rM-input-devices = upstreamOrLocal "rM-input-devices" {
+    owner = "pl-semiotics";
+    rev = "75de1a96fe9dde15a01872b4d08cef710aa30f80";
+    sha256 = "0mqmzqgqa5f5njkqr2k3sc08nfhrx8xp76z9cpxi5xcdhs69c1v2";
   };
   rM-vnc-server = upstreamOrLocal "rM-vnc-server" {
-    owner = "peter-sa";
-    rev = "v0.0.1";
-    sha256 = "0b6ragczvi40l9za468jv79xb0n84nvca8pd3m5w05nfmgsglp33";
+    owner = "pl-semiotics";
+    rev = "eebca4c3e0bb7d2f0f9096938ad891c8f4852369";
+    sha256 = "1bag4hp6liih7ck6r4ziv0g56xr7siga7ja9q4ds4g9g3vx70mx7";
   };
   gst-libvncclient-rfbsrc = upstreamOrLocal "gst-libvncclient-rfbsrc" {
-    owner = "peter-sa";
+    owner = "pl-semiotics";
     rev = "v0.0.1";
     sha256 = "0ihd6r5qzz3g49yzylfqa730c0l0jri6l1s2k63i1q1l2r339yrz";
   };
