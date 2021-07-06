@@ -1,10 +1,10 @@
-{ stdenv, hostPlatform, targetPlatform, buildPackages, linuxManualConfig, callPackage, fetchFromGitHub, lzop, kernelPatches, ... }:
+{ stdenv, lib, hostPlatform, targetPlatform, buildPackages, linuxManualConfig, callPackage, fetchFromGitHub, lzop, kernelPatches, ... }:
 
 with callPackage ./src.nix {};
 
 (linuxManualConfig {
-  inherit stdenv src version kernelPatches;
-  configfile = "${src}/arch/arm/configs/${targetPlatform.platform.name}_defconfig";
+  inherit stdenv lib src version kernelPatches;
+  configfile = "${src}/arch/arm/configs/${targetPlatform.linux-kernel.baseConfig}";
   allowImportFromDerivation = true;
 }).overrideAttrs (oA: {
   nativeBuildInputs = (oA.nativeBuildInputs or []) ++ [ lzop ];

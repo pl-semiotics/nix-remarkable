@@ -16,14 +16,14 @@ in
   # used to be.
   makeFlags = oA.makeFlags or [] ++ [
     "CC=${stdenv.cc}/bin/${stdenv.cc.targetPrefix}cc"
-    "ARCH=${stdenv.hostPlatform.platform.kernelArch}"
-  ] ++ stdenv.lib.optional (stdenv.hostPlatform != stdenv.buildPlatform) [
+    "ARCH=${stdenv.hostPlatform.linuxArch}"
+  ] ++ lib.optional (stdenv.hostPlatform != stdenv.buildPlatform) [
     "CROSS_COMPILE=${stdenv.cc.targetPrefix}"
   ];
 
   buildPhase = ''
     make mrproper $makeFlags
-  '' + lib.optionalString (targetPlatform.platform.rmVersion != 2) ''
+  '' + lib.optionalString (targetPlatform.rmVersion != 2) ''
     # RM2 headers don't pass check, sadly
     make headers_check $makeFlags
   '';

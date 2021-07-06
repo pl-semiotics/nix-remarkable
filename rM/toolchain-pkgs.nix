@@ -1,7 +1,7 @@
 { callPackage, wrapBintoolsWith, wrapCCWith, runCommand, buildPackages, targetPlatform, lib }: with lib;
 
 let
-  rMv = targetPlatform.platform.rmVersion;
+  rMv = targetPlatform.rmVersion;
   parameters = if rMv == 1 then {
     remarkable-toolchain = buildPackages.remarkable-toolchain;
     hostRoot = "x86_64-oesdk-linux";
@@ -79,18 +79,18 @@ rec {
       # better put some whitespace in there.
       suffixSalt="$(tail -n 1 $out/nix-support/add-flags.sh | sed 's/export NIX_CC_WRAPPER_FLAGS_SET_\(.*\)=1/\1/')"
       echo "doing $suffixSalt"
-    '' + optionalString (targetPlatform ? platform.gcc.optional.arch) ''
+    '' + optionalString (targetPlatform ? gcc.optional.arch) ''
       echo "mangleVarList \"NIX_CFLAGS_COMPILE_MARCH\" \''${role_suffixes[@]+\"\''${role_suffixes[@]}\"}" >>$out/nix-support/add-flags.sh
-      echo "NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}=\"\''${NIX_CFLAGS_COMPILE_MARCH_''${suffixSalt}:--march=${targetPlatform.platform.gcc.optional.arch}} \$NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}\"" >>$out/nix-support/add-flags.sh
-    '' + optionalString (targetPlatform ? platform.gcc.optional.cpu) ''
+      echo "NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}=\"\''${NIX_CFLAGS_COMPILE_MARCH_''${suffixSalt}:--march=${targetPlatform.gcc.optional.arch}} \$NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}\"" >>$out/nix-support/add-flags.sh
+    '' + optionalString (targetPlatform ? gcc.optional.cpu) ''
       echo "mangleVarList \"NIX_CFLAGS_COMPILE_MCPU\" \''${role_suffixes[@]+\"\''${role_suffixes[@]}\"}" >>$out/nix-support/add-flags.sh
-      echo "NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}=\"\''${NIX_CFLAGS_COMPILE_MCPU_''${suffixSalt}:--mcpu=${targetPlatform.platform.gcc.optional.cpu}} \$NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}\"" >>$out/nix-support/add-flags.sh
-    '' + optionalString (targetPlatform ? platform.gcc.optional.fpu) ''
+      echo "NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}=\"\''${NIX_CFLAGS_COMPILE_MCPU_''${suffixSalt}:--mcpu=${targetPlatform.gcc.optional.cpu}} \$NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}\"" >>$out/nix-support/add-flags.sh
+    '' + optionalString (targetPlatform ? gcc.optional.fpu) ''
       echo "mangleVarList \"NIX_CFLAGS_COMPILE_MFPU\" \''${role_suffixes[@]+\"\''${role_suffixes[@]}\"}" >>$out/nix-support/add-flags.sh
-      echo "NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}=\"\''${NIX_CFLAGS_COMPILE_MFPU_''${suffixSalt}:--mfpu=${targetPlatform.platform.gcc.optional.fpu}} \$NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}\"" >>$out/nix-support/add-flags.sh
-    '' + optionalString (targetPlatform ? platform.gcc.optional.float-abi) ''
+      echo "NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}=\"\''${NIX_CFLAGS_COMPILE_MFPU_''${suffixSalt}:--mfpu=${targetPlatform.gcc.optional.fpu}} \$NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}\"" >>$out/nix-support/add-flags.sh
+    '' + optionalString (targetPlatform ? gcc.optional.float-abi) ''
       echo "mangleVarList \"NIX_CFLAGS_COMPILE_MFLOAT_ABI\" \''${role_suffixes[@]+\"\''${role_suffixes[@]}\"}" >>$out/nix-support/add-flags.sh
-      echo "NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}=\"\''${NIX_CFLAGS_COMPILE_MFLOAT_ABI_''${suffixSalt}:--mfloat-abi=hard} \$NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}\"" >>$out/nix-support/add-flags.sh
+      echo "NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}=\"\''${NIX_CFLAGS_COMPILE_MFLOAT_ABI_''${suffixSalt}:--mfloat-abi=${targetPlatform.gcc.optional.float-abi}} \$NIX_CFLAGS_COMPILE_BEFORE_''${suffixSalt}\"" >>$out/nix-support/add-flags.sh
     '';
   };
 }
